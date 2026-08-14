@@ -1,57 +1,40 @@
-import math
-def is_prime(n):
-    """ Valida si un número es primo o no
+def planear_viaje(vuelos:list) -> list:
+    lista = []
+    i = 0
+    while i < len(vuelos):
+        h = 0
+        j = 1
+        contador = 0
+        while h < len(vuelos):
+            inicio = vuelos[i][0]
+            salida = vuelos[h][j]
+            if inicio == salida:
+                contador += 1
+            h += 1
+        if contador == 0:
+            lista.append(vuelos[i])
+        i += 1
+    i = 0 
+    j = 0 
+    while i < len(vuelos) and j == len(lista)-1:
+        if lista[j][1] == vuelos[i][0]:
+            lista.append(vuelos[i])
+            j += 1
+            if len(lista) != len(vuelos):
+                i = 0
+            else:
+                i += 1
+        else:
+            i += 1
+        
+    
+    return lista 
 
-        :param n: Número a validar
-        :type n: int
 
-        :return: True si es primo, False en caso contrario
-    """
-    # Corner cases
-    if(n <= 1):
-        return False
-    if(n <= 3):
-        return True
-
-    if(n % 2 == 0 or n % 3 == 0):
-        return False
-
-    for i in range(5, int(math.sqrt(n) + 1), 6):
-        if(n % i == 0 or n % (i + 2) == 0):
-            return False
-
-    return True
-def next_prime(n):
-    """ Encuentra el siguiente número primo mayor a n
-
-        :param n: Número a partir del cual se busca el siguiente primo
-        :type n: int
-
-        :return: El siguiente número primo mayor a n
-    """
-    found = False
-    next_p = 1
-    # Base case
-    if (n <= 1):
-        next_p = 2
-        found = True
-    next_p = int(n)
-    # Loop continuously until is_prime returns
-    # True for a number greater than n
-    while(not found):
-        next_p = next_p + 1
-        if is_prime(next_p):
-            found = True
-    return int(next_p)
-
-def generador_primos(inicio,fin):
-    resp = []
-    if is_prime(inicio):
-        resp.append(inicio)
-    primo = next_prime(inicio)
-    resp.append(primo)
-    while primo < fin:
-        primo = next_prime(inicio)
-        resp.append(primo)
-    return resp
-print(generador_primos(10,50))
+print(planear_viaje([
+[ "Berlin", "Beijing"],
+[ "Amsterdam" , "Berlin"] ,
+[ "Bogota", "Madrid"] ,
+[ "Beijing", "Tokyo" ] ,
+[ "Madrid", "Amsterdam"] 
+]))
